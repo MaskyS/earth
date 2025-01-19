@@ -220,12 +220,16 @@
             var coastHi = topojson.feature(topo, µ.isMobile() ? o.coastline_110m : o.coastline_50m);
             var lakesLo = topojson.feature(topo, µ.isMobile() ? o.lakes_tiny : o.lakes_110m);
             var lakesHi = topojson.feature(topo, µ.isMobile() ? o.lakes_110m : o.lakes_50m);
+            var countriesLo = topojson.feature(topo, µ.isMobile() ? o.countries_tiny : o.countries_110m);
+            var countriesHi = topojson.feature(topo, µ.isMobile() ? o.countries_110m : o.countries_50m);
             log.timeEnd("building meshes");
             return {
                 coastLo: coastLo,
                 coastHi: coastHi,
                 lakesLo: lakesLo,
-                lakesHi: lakesHi
+                lakesHi: lakesHi,
+                countriesLo: countriesLo,
+                countriesHi: countriesHi
             };
         });
     }
@@ -299,6 +303,7 @@
         var path = d3.geo.path().projection(globe.projection).pointRadius(7);
         var coastline = d3.select(".coastline");
         var lakes = d3.select(".lakes");
+        var countries = d3.select(".countries"); 
         d3.selectAll("path").attr("d", path);  // do an initial draw -- fixes issue with safari
 
         function drawLocationMark(point, coord) {
@@ -338,6 +343,7 @@
                 moveStart: function() {
                     coastline.datum(mesh.coastLo);
                     lakes.datum(mesh.lakesLo);
+                    countries.datum(mesh.countriesLo); 
                     rendererAgent.trigger("start");
                 },
                 move: function() {
@@ -346,6 +352,7 @@
                 moveEnd: function() {
                     coastline.datum(mesh.coastHi);
                     lakes.datum(mesh.lakesHi);
+                    countries.datum(mesh.countriesHi); 
                     d3.selectAll("path").attr("d", path);
                     rendererAgent.trigger("render");
                 },

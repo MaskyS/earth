@@ -184,6 +184,10 @@ var globes = function() {
                     .datum(d3.geo.graticule().minorStep([0, 90]).majorStep([0, 90]))
                     .attr("d", path);
                 mapSvg.append("path")
+                    .attr("class", "countries");
+                mapSvg.append("path")
+                    .attr("class", "coastline");
+                mapSvg.append("path")
                     .attr("class", "coastline");
                 mapSvg.append("path")
                     .attr("class", "lakes");
@@ -268,6 +272,8 @@ var globes = function() {
                     .datum(d3.geo.graticule().minorStep([0, 90]).majorStep([0, 90]))
                     .attr("d", path);
                 mapSvg.append("path")
+                    .attr("class", "countries");
+                mapSvg.append("path")
                     .attr("class", "coastline");
                 mapSvg.append("path")
                     .attr("class", "lakes");
@@ -317,6 +323,9 @@ var globes = function() {
                     .attr("clip-path", "url(#clip)")
                     .datum(d3.geo.graticule())
                     .attr("d", path);
+                mapSvg.append("path")
+                    .attr("class", "countries")
+                    .attr("clip-path", "url(#clip)");
                 mapSvg.append("path")
                     .attr("class", "coastline")
                     .attr("clip-path", "url(#clip)");
