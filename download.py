@@ -8,6 +8,18 @@ import subprocess
 
 PRESSURE_LEVELS = ["1000", "850", "700", "500", "250", "70", "10"]
 
+# Mapping levels to their corresponding surface values
+LEVEL_SURFACE_VALUE_MAP = {
+    "1000": 100000.0,
+    "850": 85000.0,
+    "700": 70000.0,
+    "500": 50000.0,
+    "250": 25000.0,
+    "70": 7000.0,
+    "10": 1000.0, 
+    "surface": 10.0,
+}
+
 # Build single search pattern for all levels
 SEARCH_PATTERN = (
     ":UGRD:(10 m above ground|"
@@ -23,6 +35,8 @@ DATES = pd.date_range(
     end="2025-01-15 18:00",  # Get all 4 GFS runs for the day
     freq="6H",
 )
+
+
 
 # Initialize FastHerbie
 print("Initializing FastHerbie")
@@ -120,16 +134,20 @@ def process_grib_files(grib_files: list[Path]):
         for level in ["surface"] + PRESSURE_LEVELS:
             if level == "surface":
                 outfile = f"{hour_stamp}-wind-surface-level-gfs-1.0.json"
+                fs = "103" # filter surface type code
             else:
                 outfile = f"{hour_stamp}-wind-isobaric-{level}hPa-gfs-1.0.json"
-
+                fs = "100"
             output_path = output_dir / outfile
+
             try:
                 subprocess.run(
                     [
                         "grib2json",
                         "-d",  # Print data
                         "-n",  # Print names
+                        "--filter.surface", str(fs), # Filter by level (surface type)
+                        "--filter.value", str(LEVEL_SURFACE_VALUE_MAP[level]), # Filter by level (surface value)
                         "-o",
                         str(output_path),
                         str(grib_file),
