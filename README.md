@@ -1,5 +1,14 @@
 earth
 =====
+General notes
+
+[x] Add a more automatic way of pulling in the data
+[] Constrain the map so I can for instance, see just LA. Same for downloading the data.
+[] Generate wind rose diagram for point I click on
+  - Resources: 
+      https://medium.com/@hyponeutremia/extracting-wind-trends-from-historical-weather-information-3412a5dcdb34
+[] Add labels, city level data.
+[] Bug: Sometimes if an option has no data as the page loads, you wont be able to timestep.
 
 **NOTE: the location of `dev-server.js` has changed from `{repository}/server/` to `{repository}/`**
 
