@@ -5,3 +5,5 @@ target
 scratch
 private
 *.iml
+ne_things/
+public/data/weather/
